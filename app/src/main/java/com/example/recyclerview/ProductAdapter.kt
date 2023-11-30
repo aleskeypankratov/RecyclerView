@@ -5,21 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.recyclerview.databinding.ProductItemBinding
 
-class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
 
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder =
         ProductViewHolder(
             ProductItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
-
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bind(differ.currentList[position])
     }
@@ -30,6 +28,17 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
         fun bind(product: Product) = with(itemBinding) {
             textTitle.text = product.title
             textCategory.text = product.category
+
+            if (product.preview.isNotBlank()) {
+                imageView.load(product.preview)
+                {
+                    crossfade(true)
+                    placeholder(R.drawable.base)
+                    error(R.drawable.base)
+                }
+            } else {
+                imageView.setImageResource(R.drawable.base)
+            }
         }
     }
     override fun getItemCount(): Int = differ.currentList.size

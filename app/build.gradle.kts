@@ -50,4 +50,5 @@ dependencies {
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("io.coil-kt:coil:2.5.0")
+    implementation("com.github.javafaker:javafaker:1.0.2")
 }
