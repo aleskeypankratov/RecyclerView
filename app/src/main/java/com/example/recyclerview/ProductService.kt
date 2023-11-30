@@ -25,7 +25,7 @@ class ProductService {
                 id = products.size.toString(),
                 title = faker.food().dish(),
                 category = "Food",
-                preview = IMAGES[0]
+                preview = IMAGES[(0..<IMAGES.size).random()]
             )
         )
     }
